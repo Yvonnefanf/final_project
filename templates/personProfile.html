@@ -1,0 +1,133 @@
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css')}}">
+</head>
+
+<p>{{ human["name"] }}</p>
+<img src="{{ url_for('static', filename=human["avatar"])}}" alt="">
+<p>Is he or she signed? {{ human["isSigned"] }}</p>
+<div id="renderChart" style="width:400px;height:400px;"></div>
+
+<script src="{{ url_for('static', filename='js/jquery.min.js')}}"></script>
+<script src="{{ url_for('static', filename='js/echarts.min.js')}}"></script>
+<script>
+
+    console.log({{ human["activityData"] }})
+
+    // console.log('readyToRenderData', readyToRenderData);
+    var myChart = echarts.init(document.getElementById('renderChart'));
+
+    var option = {
+        xAxis: {},
+        yAxis: {},
+        dataZoom: [
+            {
+                type: 'slider',
+                xAxisIndex: 0,
+                filterMode: 'empty'
+            },
+            {
+                type: 'slider',
+                yAxisIndex: 0,
+                filterMode: 'empty'
+            },
+            {
+                type: 'inside',
+                xAxisIndex: 0,
+                filterMode: 'empty'
+            },
+            {
+                type: 'inside',
+                yAxisIndex: 0,
+                filterMode: 'empty'
+            }
+        ],
+        series: [{
+            symbolSize: 20,
+            data: [
+                [300, 400],
+                [200, 400],
+            ],
+            type: 'scatter'
+        }]
+    };
+  
+   myChart.setOption(option);
+
+   myChart.showLoading();
+
+   var data = [];
+   $.ajax({
+         type : "get",
+//       async : true,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
+         url : "http://127.0.0.1:5000/echarts",    //请求发送到Servlet处
+//       data : {},
+         dataType : "json",        //返回数据形式为json
+         success : function(result) {
+             //请求成功时执行该函数内容，result即为服务器返回的json对象
+             if (result) {
+                console.log("tracedData", result);
+                    // construct data
+                    const readyToRenderData = result.map(item => {
+                    if (item.name === 'weiwei') {
+                        return [item.left, item.bottom];
+                    }
+                    });
+
+                    // construct yvshenmde
+                    const readyToRenderDataTwo = result.map(item => {
+                    if (item.name === 'weige') {
+                        return [item.left, item.bottom];
+                    }
+                });
+                 var option = {
+                    xAxis: {},
+                    yAxis: {},
+                    dataZoom: [
+                        {
+                            type: 'slider',
+                            xAxisIndex: 0,
+                            filterMode: 'empty'
+                        },
+                        {
+                            type: 'slider',
+                            yAxisIndex: 0,
+                            filterMode: 'empty'
+                        },
+                        {
+                            type: 'inside',
+                            xAxisIndex: 0,
+                            filterMode: 'empty'
+                        },
+                        {
+                            type: 'inside',
+                            yAxisIndex: 0,
+                            filterMode: 'empty'
+                        }
+                    ],
+                    series: [{
+                        symbolSize: 20,
+                        data: [
+                            [300, 400],
+                            [200, 400],
+                        ],
+                        type: 'scatter'
+                    }]
+                };
+                    myChart.hideLoading();    //隐藏加载动画
+                    myChart.setOption({        //加载数据图表
+                        series: {
+                            type: 'scatter',
+                            data: readyToRenderDataTwo
+                        }
+                    });
+
+             }
+
+        },
+         error : function(errorMsg) {
+             //请求失败时执行该函数
+         alert("图表请求数据失败!");
+         myChart.hideLoading();
+         }
+    })
+</script>

@@ -1,0 +1,9 @@
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css')}}">
+</head>
+
+<div>
+    {% for human in humans %}
+        <a href={{ url_for('personProfile', name=human["name"])}}>{{ human["name"] }}</a>
+    {% endfor %}
+</div>
