@@ -8,29 +8,41 @@ with open('traceData.json') as fp:
 
 humans = [
     {
-        "name": "Yvonne",
+        "name": "李同学",
+        "isSigned": False,
+        "avatar": "weiwei.jpg",
+        "activityData": trace_data
+    },
+    {
+        "name": "黄同学",
         "isSigned": False,
         "avatar": "weige.jpg",
         "activityData": trace_data
     },
     {
-        "name": "pftom",
+        "name": "陈同学",
         "isSigned": False,
         "avatar": "weige.jpg",
         "activityData": trace_data
     },
     {
-        "name": "小哲哲",
+        "name": "唐同学",
         "isSigned": False,
         "avatar": "weige.jpg",
         "activityData": trace_data
     },
     {
-        "name": "datangzong",
+        "name": "曹同学",
         "isSigned": False,
-        "avatar": "weige.jpg",
+        "avatar": "caotongjie.jpeg",
         "activityData": trace_data
     },
+    {
+        "name": "萌同学",
+        "isSigned": False,
+        "avatar": "mengshu.jpeg",
+        "activityData": trace_data
+    },·
 ]
 
 
