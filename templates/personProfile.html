@@ -11,8 +11,6 @@
 <script src="{{ url_for('static', filename='js/echarts.min.js')}}"></script>
 <script>
 
-    console.log({{ human["activityData"] }})
-
     // console.log('readyToRenderData', readyToRenderData);
     var myChart = echarts.init(document.getElementById('renderChart'));
 
@@ -66,16 +64,10 @@
              //请求成功时执行该函数内容，result即为服务器返回的json对象
              if (result) {
                 console.log("tracedData", result);
-                    // construct data
-                    const readyToRenderData = result.map(item => {
-                    if (item.name === 'weiwei') {
-                        return [item.left, item.bottom];
-                    }
-                    });
 
                     // construct yvshenmde
                     const readyToRenderDataTwo = result.map(item => {
-                    if (item.name === 'weige') {
+                    if (item.name === '{{human["name"]}}') {
                         return [item.left, item.bottom];
                     }
                 });
